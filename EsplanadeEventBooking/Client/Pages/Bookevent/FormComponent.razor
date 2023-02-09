@@ -1,0 +1,28 @@
+﻿<h3>FormComponent</h3>
+
+<EditForm Model="@euser" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group">
+        <label>Name:</label>
+        <div>
+            <InputText @bind-Value="@euser.Name" class="form-control" />
+            <ValidationMessage For="@(() => euser.Name)" />
+        </div>
+        <label>Age:</label>
+        <div>
+            <InputNumber @bind-Value="@euser.Age" class="form-control" />
+            <ValidationMessage For="@(() => euser.Age)" />
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success btn-block">
+        Create Euser
+    </button>
+</EditForm>
+
+@code {
+    [Parameter] public Euser euser { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+}
