@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.33027.164
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EsplanadeEventBooking.Server", "EsplanadeEventBooking\Server\EsplanadeEventBooking.Server.csproj", "{3CF92617-8A78-4C00-9F68-7BD4E794F9C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EsplanadeEventBooking.Server", "EsplanadeEventBooking\Server\EsplanadeEventBooking.Server.csproj", "{3CF92617-8A78-4C00-9F68-7BD4E794F9C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EsplanadeEventBooking.Client", "EsplanadeEventBooking\Client\EsplanadeEventBooking.Client.csproj", "{7B42CB33-D846-46E1-864C-7BF85F510F91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EsplanadeEventBooking.Client", "EsplanadeEventBooking\Client\EsplanadeEventBooking.Client.csproj", "{7B42CB33-D846-46E1-864C-7BF85F510F91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EsplanadeEventBooking.Shared", "EsplanadeEventBooking\Shared\EsplanadeEventBooking.Shared.csproj", "{0914CB87-C033-4F02-A4C8-A1386A0C297D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EsplanadeEventBooking.Shared", "EsplanadeEventBooking\Shared\EsplanadeEventBooking.Shared.csproj", "{0914CB87-C033-4F02-A4C8-A1386A0C297D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

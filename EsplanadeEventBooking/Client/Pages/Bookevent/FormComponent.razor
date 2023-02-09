@@ -1,28 +1,75 @@
-﻿<h3>FormComponent</h3>
+﻿@inject HttpClient _client
 
-<EditForm Model="@euser" OnValidSubmit="@OnValidSubmit">
+<h3>FormComponent</h3>
+
+<EditForm Model="@bookevent" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
     <div class="form-group">
-        <label>Name:</label>
+        <label>Title:</label>
         <div>
-            <InputText @bind-Value="@euser.Name" class="form-control" />
-            <ValidationMessage For="@(() => euser.Name)" />
+            <InputText @bind-Value="@bookevent.Title" class="form-control" />
+            <ValidationMessage For="@(() => bookevent.Title)" />
         </div>
-        <label>Age:</label>
+    </div>
+    <div class="form-group">
+        <label>Location:</label>
         <div>
-            <InputNumber @bind-Value="@euser.Age" class="form-control" />
-            <ValidationMessage For="@(() => euser.Age)" />
+            <InputText @bind-Value="@bookevent.Location" class="form-control" />
+            <ValidationMessage For="@(() => bookevent.Location)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Start Date:</label>
+        <div class="form-group">
+            <div>
+                <InputDate @bind-Value="bookevent.StartDate" class="form-control">
+                </InputDate>
+                <ValidationMessage For="@(() => bookevent.StartDate)" />
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>End Date:</label>
+        <div>
+            <InputDate @bind-Value="bookevent.EndDate" class="form-control">
+            </InputDate>
+            <ValidationMessage For="@(() => bookevent.EndDate)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Creator:</label>
+        <div>
+            <InputSelect @bind-Value="bookevent.CreatorId" class="form-control">
+                <option value="">-- Select Creator --</option>
+                @if (Creators != null)
+                {
+                    foreach (var creators in Creators)
+                    {
+                        <option value="@creators.Id">
+                            @creators.Name
+                        </option>
+                    }
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => bookevent.CreatorId)" />
         </div>
     </div>
     <button type="submit" class="btn btn-success btn-block">
-        Create Euser
+        Create Bookevent
     </button>
+    <BackToList Target="bookevents" />
 </EditForm>
 
 @code {
-    [Parameter] public Euser euser { get; set; }
+    [Parameter] public Bookevent bookevent { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
 
+    private IList<Creator> Creators;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Creators = await _client.GetFromJsonAsync<List<Creator>>($"{Endpoints.CreatorsEndpoint}");
+    }
 }

@@ -2,9 +2,9 @@
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
-<h3>Edit Euser</h3>
+<h3>Edit User</h3>
 
-<FormComponent ButtonText="Update" OnValidSubmit="EditMake" euser="euser" />
+<FormComponent ButtonText="Update" OnValidSubmit="EditEuser" euser="euser" />
 
 @code {
     [Parameter] public int id { get; set; }
@@ -12,10 +12,9 @@
 
     protected async override Task OnParametersSetAsync()
     {
-        euser = await
-        _client.GetFromJsonAsync<Euser>($"{Endpoints.EusersEndpoint}/{id}");
+        euser = await _client.GetFromJsonAsync<Euser>($"{Endpoints.EusersEndpoint}/{id}");
     }
-    async Task EditMake()
+    async Task EditEuser()
     {
         await _client.PutAsJsonAsync($"{Endpoints.EusersEndpoint}/{id}",euser);
         _navManager.NavigateTo("/eusers/");

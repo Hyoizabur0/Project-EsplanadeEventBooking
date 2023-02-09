@@ -1,0 +1,22 @@
+﻿@page  "/creators/edit/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>Edit User</h3>
+
+<FormComponent ButtonText="Update" OnValidSubmit="Editcreator" creator="creator" />
+
+@code {
+    [Parameter] public int id { get; set; }
+    Creator creator = new Creator();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        creator = await _client.GetFromJsonAsync<Creator>($"{Endpoints.CreatorsEndpoint}/{id}");
+    }
+    async Task Editcreator()
+    {
+        await _client.PutAsJsonAsync($"{Endpoints.CreatorsEndpoint}/{id}",creator);
+        _navManager.NavigateTo("/creators/");
+    }
+}

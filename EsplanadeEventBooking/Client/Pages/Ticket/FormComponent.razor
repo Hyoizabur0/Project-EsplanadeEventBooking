@@ -1,6 +1,8 @@
-﻿<h3>FormComponent</h3>
+﻿@inject HttpClient _client
 
-<EditForm Model="@ticket" OnValidSubmit="CreateTicket">
+<h3>FormComponent</h3>
+
+<EditForm Model="@ticket" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
     <div class="form-group">
@@ -61,8 +63,9 @@
         </div>
     </div>
     <button type="submit" class="btn btn-success btn-block">
-        Create Ticket
+        @ButtonText
     </button>
+    <BackToList Target="tickets" />
 </EditForm>
 
 @code {
