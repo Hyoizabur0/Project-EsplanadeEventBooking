@@ -15,8 +15,19 @@
     <div class="form-group">
         <label>Location:</label>
         <div>
-            <InputText @bind-Value="@bookevent.Location" class="form-control" />
-            <ValidationMessage For="@(() => bookevent.Location)" />
+            <InputSelect @bind-Value="bookevent.LocationId" class="form-control">
+                <option value="">-- Select Location --</option>
+                @if (Locations != null)
+                {
+                    foreach (var locations in Locations)
+                    {
+                        <option value="@locations.Id">
+                            @locations.Name
+                        </option>
+                    }
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => bookevent.LocationId)" />
         </div>
     </div>
     <div class="form-group">
@@ -67,9 +78,11 @@
     [Parameter] public EventCallback OnValidSubmit { get; set; }
 
     private IList<Creator> Creators;
+    private IList<Location> Locations;
 
     protected async override Task OnInitializedAsync()
     {
         Creators = await _client.GetFromJsonAsync<List<Creator>>($"{Endpoints.CreatorsEndpoint}");
+        Locations = await _client.GetFromJsonAsync<List<Location>>($"{Endpoints.LocationsEndpoint}");
     }
 }

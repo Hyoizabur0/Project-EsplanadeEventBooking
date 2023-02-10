@@ -25,6 +25,7 @@ namespace EsplanadeEventBooking.Server.Data
         public DbSet<Creator> Creators { get; set; }
         public DbSet<Euser> Eusers { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<Location> Locations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -33,6 +34,7 @@ namespace EsplanadeEventBooking.Server.Data
             builder.ApplyConfiguration(new UserRoleSeedConfiguration());
             builder.ApplyConfiguration(new UserSeedConfiguration());
             builder.ApplyConfiguration(new CreatorSeedConfiguration());
+            builder.ApplyConfiguration(new LocationSeedConfiguration());
         }
     }
 }

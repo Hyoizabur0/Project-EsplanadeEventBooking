@@ -1,0 +1,73 @@
+﻿@page "/locations/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h3 class="card-title">Locations</h3>
+<br />
+
+<a href="/locations/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Location
+</a>
+<br />
+<br />
+
+@if (Locations == null)
+{
+    <div class="alert alert-info">Loading Locations...</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Max Row</th>
+                <th>Max Column</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var location in Locations)
+            {
+                <tr>
+                    <td>@location.Name</td>
+                    <td>@location.MaxRow</td>
+                    <td>@location.MaxCol</td>
+                    <td>
+                        <a href="/locations/view/@location.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/locations/edit/@location.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(location.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Location> Locations;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Locations = await _client.GetFromJsonAsync<List<Location>>($"{Endpoints.LocationsEndpoint}");
+    }
+
+    async Task Delete(int locationId)
+    {
+        var location = Locations.First(q => q.Id == locationId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {location.Name}?");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{Endpoints.LocationsEndpoint}/{locationId}");
+            await OnInitializedAsync();
+        }
+    }
+}

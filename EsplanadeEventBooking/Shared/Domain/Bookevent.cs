@@ -12,7 +12,8 @@ namespace EsplanadeEventBooking.Shared.Domain
 		public string Title { get; set; }
 		public DateTime StartDate { get; set; }
 		public DateTime? EndDate { get; set; }
-		public string Location { get; set; }
+        public int LocationId { get; set; }
+        public virtual Location Location { get; set; }
 		//public Blob Thumbnail { get; set; }
 		public int CreatorId { get; set; }
 		public virtual Creator Creator { get; set; }

@@ -1,0 +1,22 @@
+﻿@page  "/locations/edit/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>Edit User</h3>
+
+<FormComponent ButtonText="Update" OnValidSubmit="EditLocation" location="location" />
+
+@code {
+    [Parameter] public int id { get; set; }
+    Location location = new Location();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        location = await _client.GetFromJsonAsync<Location>($"{Endpoints.LocationsEndpoint}/{id}");
+    }
+    async Task EditLocation()
+    {
+        await _client.PutAsJsonAsync($"{Endpoints.LocationsEndpoint}/{id}", location);
+        _navManager.NavigateTo("/locations/");
+    }
+}

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EsplanadeEventBooking.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230209185057_newdb")]
+    [Migration("20230210010158_newdb")]
     partial class newdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,7 +96,7 @@ namespace EsplanadeEventBooking.Server.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a31ffdda-f5fb-4f8c-9e37-61398f234706",
+                            ConcurrencyStamp = "b811c9cb-2ebc-4292-b455-16f29f8c4a19",
                             Email = "admin@localhost.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -104,9 +104,9 @@ namespace EsplanadeEventBooking.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOZXsfXLuFkTz2IMY15EpIwmDFTTMcoH4wjF+vdv8Q1Ad+20Cu0Gte0YdXbwfrGz0g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJVYaD/Z7qml90RuOuH0P21WkrZVZTnMLAXo8CnRxyTWhpUElaoX1tq8hbLdd6ng/w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "62634ef3-7eed-492c-9afc-dba9ad3986b5",
+                            SecurityStamp = "7e05ab25-025d-4f1a-a56b-f42e4b29903e",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -131,11 +131,11 @@ namespace EsplanadeEventBooking.Server.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("EndDate")
+                    b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Location")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("LocationId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
@@ -149,6 +149,8 @@ namespace EsplanadeEventBooking.Server.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CreatorId");
+
+                    b.HasIndex("LocationId");
 
                     b.ToTable("Bookevents");
                 });
@@ -188,8 +190,8 @@ namespace EsplanadeEventBooking.Server.Migrations
                             Id = 1,
                             Age = 20,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 2, 10, 2, 50, 56, 612, DateTimeKind.Local).AddTicks(6323),
-                            DateUpdated = new DateTime(2023, 2, 10, 2, 50, 56, 613, DateTimeKind.Local).AddTicks(3579),
+                            DateCreated = new DateTime(2023, 2, 10, 9, 1, 57, 850, DateTimeKind.Local).AddTicks(9444),
+                            DateUpdated = new DateTime(2023, 2, 10, 9, 1, 57, 851, DateTimeKind.Local).AddTicks(7577),
                             Name = "Adam",
                             UpdatedBy = "System"
                         });
@@ -223,6 +225,63 @@ namespace EsplanadeEventBooking.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Eusers");
+                });
+
+            modelBuilder.Entity("EsplanadeEventBooking.Shared.Domain.Location", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MaxCol")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MaxRow")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Locations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2023, 2, 10, 9, 1, 57, 852, DateTimeKind.Local).AddTicks(1663),
+                            DateUpdated = new DateTime(2023, 2, 10, 9, 1, 57, 852, DateTimeKind.Local).AddTicks(1670),
+                            MaxCol = 60,
+                            MaxRow = 60,
+                            Name = "Theatre",
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2023, 2, 10, 9, 1, 57, 852, DateTimeKind.Local).AddTicks(1673),
+                            DateUpdated = new DateTime(2023, 2, 10, 9, 1, 57, 852, DateTimeKind.Local).AddTicks(1674),
+                            MaxCol = 37,
+                            MaxRow = 44,
+                            Name = "Concert Hall",
+                            UpdatedBy = "System"
+                        });
                 });
 
             modelBuilder.Entity("EsplanadeEventBooking.Shared.Domain.Ticket", b =>
@@ -401,14 +460,14 @@ namespace EsplanadeEventBooking.Server.Migrations
                         new
                         {
                             Id = "ad2bcf0c-20db-474f-8407-5a6b159518ba",
-                            ConcurrencyStamp = "cec16822-06b4-42bc-a1dd-8b0ec19cf945",
+                            ConcurrencyStamp = "b836dc04-fd64-45ef-bc19-6ec0691c5390",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "bd2bcf0c-20db-474f-8407-5a6b159518bb",
-                            ConcurrencyStamp = "2aa4d9f4-eca1-496b-a7d5-5a82d2774e3e",
+                            ConcurrencyStamp = "4b393d25-d0bf-4977-b5b6-093a1df948c3",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -537,7 +596,15 @@ namespace EsplanadeEventBooking.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("EsplanadeEventBooking.Shared.Domain.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Creator");
+
+                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("EsplanadeEventBooking.Shared.Domain.Ticket", b =>

@@ -20,6 +20,7 @@ namespace EsplanadeEventBooking.Server.Repository
         private IGenericRepository<Euser> _eusers;
         private IGenericRepository<Creator> _creators;
         private IGenericRepository<Ticket> _tickets;
+        private IGenericRepository<Location> _locations;
         private UserManager<ApplicationUser> _userManager;
 
         public UnitOfWork(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
@@ -36,6 +37,8 @@ namespace EsplanadeEventBooking.Server.Repository
             => _creators ??= new GenericRepository<Creator>(_context);
         public IGenericRepository<Ticket> Tickets
             => _tickets ??= new GenericRepository<Ticket>(_context);
+        public IGenericRepository<Location> Locations
+            => _locations ??= new GenericRepository<Location>(_context);
 
         public void Dispose()
         {

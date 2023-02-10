@@ -14,5 +14,6 @@ namespace EsplanadeEventBooking.Server.IRepository
         IGenericRepository<Creator> Creators { get; }
         IGenericRepository<Euser> Eusers { get; }
         IGenericRepository<Ticket> Tickets { get; }
+        IGenericRepository<Location> Locations { get; }
     }
 }

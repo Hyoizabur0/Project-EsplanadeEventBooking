@@ -104,6 +104,25 @@ namespace EsplanadeEventBooking.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Locations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MaxRow = table.Column<int>(type: "int", nullable: false),
+                    MaxCol = table.Column<int>(type: "int", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Locations", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PersistedGrants",
                 columns: table => new
                 {
@@ -237,8 +256,8 @@ namespace EsplanadeEventBooking.Server.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LocationId = table.Column<int>(type: "int", nullable: false),
                     CreatorId = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -252,6 +271,12 @@ namespace EsplanadeEventBooking.Server.Migrations
                         name: "FK_Bookevents_Creators_CreatorId",
                         column: x => x.CreatorId,
                         principalTable: "Creators",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Bookevents_Locations_LocationId",
+                        column: x => x.LocationId,
+                        principalTable: "Locations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -294,19 +319,28 @@ namespace EsplanadeEventBooking.Server.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "ad2bcf0c-20db-474f-8407-5a6b159518ba", "cec16822-06b4-42bc-a1dd-8b0ec19cf945", "Administrator", "ADMINISTRATOR" },
-                    { "bd2bcf0c-20db-474f-8407-5a6b159518bb", "2aa4d9f4-eca1-496b-a7d5-5a82d2774e3e", "User", "USER" }
+                    { "ad2bcf0c-20db-474f-8407-5a6b159518ba", "b836dc04-fd64-45ef-bc19-6ec0691c5390", "Administrator", "ADMINISTRATOR" },
+                    { "bd2bcf0c-20db-474f-8407-5a6b159518bb", "4b393d25-d0bf-4977-b5b6-093a1df948c3", "User", "USER" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "a31ffdda-f5fb-4f8c-9e37-61398f234706", "admin@localhost.com", false, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN", "AQAAAAEAACcQAAAAEOZXsfXLuFkTz2IMY15EpIwmDFTTMcoH4wjF+vdv8Q1Ad+20Cu0Gte0YdXbwfrGz0g==", null, false, "62634ef3-7eed-492c-9afc-dba9ad3986b5", false, "Admin" });
+                values: new object[] { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "b811c9cb-2ebc-4292-b455-16f29f8c4a19", "admin@localhost.com", false, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN", "AQAAAAEAACcQAAAAEJVYaD/Z7qml90RuOuH0P21WkrZVZTnMLAXo8CnRxyTWhpUElaoX1tq8hbLdd6ng/w==", null, false, "7e05ab25-025d-4f1a-a56b-f42e4b29903e", false, "Admin" });
 
             migrationBuilder.InsertData(
                 table: "Creators",
                 columns: new[] { "Id", "Age", "CreatedBy", "DateCreated", "DateUpdated", "Name", "UpdatedBy" },
-                values: new object[] { 1, 20, "System", new DateTime(2023, 2, 10, 2, 50, 56, 612, DateTimeKind.Local).AddTicks(6323), new DateTime(2023, 2, 10, 2, 50, 56, 613, DateTimeKind.Local).AddTicks(3579), "Adam", "System" });
+                values: new object[] { 1, 20, "System", new DateTime(2023, 2, 10, 9, 1, 57, 850, DateTimeKind.Local).AddTicks(9444), new DateTime(2023, 2, 10, 9, 1, 57, 851, DateTimeKind.Local).AddTicks(7577), "Adam", "System" });
+
+            migrationBuilder.InsertData(
+                table: "Locations",
+                columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdated", "MaxCol", "MaxRow", "Name", "UpdatedBy" },
+                values: new object[,]
+                {
+                    { 1, "System", new DateTime(2023, 2, 10, 9, 1, 57, 852, DateTimeKind.Local).AddTicks(1663), new DateTime(2023, 2, 10, 9, 1, 57, 852, DateTimeKind.Local).AddTicks(1670), 60, 60, "Theatre", "System" },
+                    { 2, "System", new DateTime(2023, 2, 10, 9, 1, 57, 852, DateTimeKind.Local).AddTicks(1673), new DateTime(2023, 2, 10, 9, 1, 57, 852, DateTimeKind.Local).AddTicks(1674), 37, 44, "Concert Hall", "System" }
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -356,6 +390,11 @@ namespace EsplanadeEventBooking.Server.Migrations
                 name: "IX_Bookevents_CreatorId",
                 table: "Bookevents",
                 column: "CreatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bookevents_LocationId",
+                table: "Bookevents",
+                column: "LocationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DeviceCodes_DeviceCode",
@@ -434,6 +473,9 @@ namespace EsplanadeEventBooking.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "Creators");
+
+            migrationBuilder.DropTable(
+                name: "Locations");
         }
     }
 }
